@@ -1,0 +1,12 @@
+## Kali Linux - Alive Host Enumeration One-Liners
+
+## Ping 
+for ip in $(seq 2 50); do ping -c 1 "10.0.5.$ip" | grep -lz " 0% packet loss" && echo "10.0.5.$ip">>results.txt ; done
+
+## Fping // Simple syntax and quicker results
+sudo fping --quiet -sga 10.0.5.2 10.0.5.50 >> results.txt
+
+## Nmap // "-sn" flag is nice for a specified IP and range of IPs
+## Uses BOTH TCP and UDP, may need to specify
+## Slower results
+sudo nmap -n -vv -sn 10.0.5.2-50 -oG - | grep "Up" | cut -d ' ' -f 2 >> sweep3.txt
